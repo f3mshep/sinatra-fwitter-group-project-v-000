@@ -4,15 +4,8 @@ $(document).ready(function(){
 	 $("#showme").show("fast");
 	});
 
-
 	$(function(){
-    $("#modal-launcher, #modal-background, #modal-close").click(function() {
-        $("#modal-content, #modal-background").toggleClass("active");
-    });
-});
-
-	$(function(){
-    $("#modal-launcher, #modal-background, #modal-close").click(function() {
+    $("#modal-launcher, #modal-background").click(function() {
         $("#modal-content, #modal-background").toggleClass("active");
     });
 });

@@ -246,7 +246,7 @@
     z-index: 1000;
 }
 
-#modal-content {
+#modal-content, #modal-content2 {
     display: none;
     background-color: white;
     border-radius: 10px;
@@ -265,7 +265,7 @@
     z-index: 1000;
 }
 
-#modal-background.active, #modal-content.active {
+#modal-background.active, #modal-content.active, #modal-content2.active {
     display: block;
 }​
 
