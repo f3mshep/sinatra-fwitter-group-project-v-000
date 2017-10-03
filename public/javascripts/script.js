@@ -1,11 +1,27 @@
-$(document).ready(function() {
-    var text_max = 140;
-    $('#textarea_feedback').html(text_max + ' characters remaining');
+$(document).ready(function(){
+  $("#showme").hide()
+	$("#show").click(function(){
+	 $("#showme").show("fast");
+	});
 
-    $('#textarea').keyup(function() {
-        var text_length = $('#textarea').val().length;
-        var text_remaining = text_max - text_length;
 
-        $('#textarea_feedback').html(text_remaining + ' characters remaining');
+	$(function(){
+    $("#modal-launcher, #modal-background, #modal-close").click(function() {
+        $("#modal-content, #modal-background").toggleClass("active");
     });
 });
+
+	$(function(){
+    $("#modal-launcher, #modal-background, #modal-close").click(function() {
+        $("#modal-content, #modal-background").toggleClass("active");
+    });
+});
+	    });
+function countChar(val) {
+	var len = val.value.length;
+		if (len >= 150) {
+		  val.value = val.value.substring(0, 150);
+		} else {
+		  $('#charNum').text(150 - len);
+		  }
+		};

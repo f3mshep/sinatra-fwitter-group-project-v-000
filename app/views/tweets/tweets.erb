@@ -1,40 +1,6 @@
 <head>    
 	<script src="http://code.jquery.com/jquery-1.5.js"></script>
-    <script>
-    	$(document).ready(function(){
-    		$("#showme").hide()
-		      function countChar(val) {
-		        var len = val.value.length;
-		        if (len >= 150) {
-		          val.value = val.value.substring(0, 150);
-		        } else {
-		          $('#charNum').text(150 - len);
-		        }
-		      };
-
-		    $(function(){
-			    $("#modal-launcher1, #modal-background, #modal-close").click(function() {
-			        $("#modal-content, #modal-background").toggleClass("active");
-			    });
-				});
-
-		    $(function(){
-			    $("#modal-launcher2, #modal-background, #modal-close").click(function() {
-			        $("#modal-following, #modal-background").toggleClass("active");
-			    });
-				});
-
-		    $(function(){
-			    $("#modal-launcher3, #modal-background, #modal-close").click(function() {
-			        $("#modal-followers, #modal-background").toggleClass("active");
-			    });
-				});
-
-				$("#show").click(function(){
-		        $("#showme").show("fast");
-		    });
-	    });
-    </script>
+	<script src="../javascripts/script.js"></script>
 </head>
 <body class="background-color">
 <nav class="navbar navbar-default">
@@ -55,11 +21,13 @@
 <div class="container">
 	<div class="row"> 
 
+<!-- USER PROFILE BOX -->
+
 	  <div class="col-md-3">
 	     <div class="col-md-12 content-box">
 	     	<div class="row">
 	     	<div class="col-md-4">
-		     	<a href="#" id="modal-launcher1" class="profile-pic">
+		     	<a href="#" id="modal-launcher" class="button profile-pic">
 	  				<div class="profile-pic" style="background-image: url('<%= @user.profile_image %>')" >
 	      		<span class="glyphicon glyphicon-camera">       </span>
 	      		<span>Change Image</span>
@@ -72,8 +40,8 @@
 	      	</div>
 	     </div>
 	     <div class="row">
-	     		<a id="modal-launcher2" href="#">Followers: <%= @user.followers.size %></a>
-	     		<a id="modal-launcher3" href="#">Following: <%= @user.following.size %> </a>
+	     		<a id="button" data-modal="modalTwo" href="#">Followers: <%= @user.followers.size %></a>
+	     		<a id="button" data-modal="modalThree" href="#">Following: <%= @user.following.size %> </a>
 	     </div>
 	     </div>
 	  </div>
@@ -156,19 +124,22 @@
 	</div>
 	<!-- end of row -->
 </div>
+
+<!-- MODALS -->
 <div id="modal-background"></div>
-<div  id="modal-content">
-    <form class="form-inline" action="/users/<%= @user.slug %>/new-pic" method="post">
-    	<input type="text" class="form-control" placeholder="Profile image URL" name="profile_image">
-    	<input type="submit" class="btn btn-sm btn-primary roundify">
-    </form>
-</div>​
-<div  id="modal-following" class="modal-follows">
+	<div id="modal-content">
+	    <form class="form-inline" action="/users/<%= @user.slug %>/new-pic" method="post">
+	    	<input type="text" class="form-control" placeholder="Profile image URL" name="profile_image">
+	    	<input type="submit" class="btn btn-sm btn-primary roundify">
+	    </form>
+	</div>​
+
+<div  id="modalTwo" class="modal">
     <form class="form-inline" action="/users/<%= @user.slug %>/new-pic" method="post">
     	<h3>Following Stub</h3>
     </form>
 </div>​
-<div  id="modal-followers" class="modal-follows">
+<div  id="modal-followers" class=" modal">
     <form class="form-inline" action="/users/<%= @user.slug %>/new-pic" method="post">
     <h3>Followers Stub</h3>
     </form>
