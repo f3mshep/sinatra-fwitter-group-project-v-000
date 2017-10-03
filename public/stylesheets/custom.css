@@ -265,7 +265,26 @@
     z-index: 1000;
 }
 
-#modal-background.active, #modal-content.active {
+#modal-following {
+    background-color: white;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    box-shadow: 0 0 20px 0 #222;
+    -webkit-box-shadow: 0 0 20px 0 #222;
+    -moz-box-shadow: 0 0 20px 0 #222;
+    display: none;
+    height: 120px;
+    left: 50%;
+    margin: -120px 0 0 -160px;
+    padding: 10px;
+    position: fixed;
+    top: 50%;
+    width: 300px;
+    z-index: 1000;
+}
+
+#modal-background.active, #modal-content.active, #modal-following.active {
     display: block;
 }​
 

@@ -13,10 +13,23 @@
 		      };
 
 		    $(function(){
-			    $("#modal-launcher, #modal-background, #modal-close").click(function() {
+			    $("#modal-launcher1, #modal-background, #modal-close").click(function() {
 			        $("#modal-content, #modal-background").toggleClass("active");
 			    });
 				});
+
+		    $(function(){
+			    $("#modal-launcher2, #modal-background, #modal-close").click(function() {
+			        $("#modal-following, #modal-background").toggleClass("active");
+			    });
+				});
+
+		    $(function(){
+			    $("#modal-launcher3, #modal-background, #modal-close").click(function() {
+			        $("#modal-followers, #modal-background").toggleClass("active");
+			    });
+				});
+
 				$("#show").click(function(){
 		        $("#showme").show("fast");
 		    });
@@ -46,7 +59,7 @@
 	     <div class="col-md-12 content-box">
 	     	<div class="row">
 	     	<div class="col-md-4">
-		     	<a href="#" id="modal-launcher" class="profile-pic">
+		     	<a href="#" id="modal-launcher1" class="profile-pic">
 	  				<div class="profile-pic" style="background-image: url('<%= @user.profile_image %>')" >
 	      		<span class="glyphicon glyphicon-camera">       </span>
 	      		<span>Change Image</span>
@@ -57,6 +70,10 @@
 	        	<h4>@<%=@user.username%></h4>
 	        	<p>Fweets: <%= @user.tweets.size%></p>
 	      	</div>
+	     </div>
+	     <div class="row">
+	     		<a id="modal-launcher2" href="#">Followers: <%= @user.followers.size %></a>
+	     		<a id="modal-launcher3" href="#">Following: <%= @user.following.size %> </a>
 	     </div>
 	     </div>
 	  </div>
@@ -127,7 +144,9 @@
 		        	<div class="col-sm-4"><div class="profile-badge" style="background-image: url('<%= user.profile_image %>')" ></div></div>
 		        	<div class="col-sm-8">
 		        		<h6><%="@#{user.username}"%></h6>
-		        		<button class="btn btn-sm btn-primary roundify pull-left" type="submit"><strong>follow</strong></button>
+		        		<form action="/follower/<%= @user.id %>/new" method="post">
+		        			<button class="btn btn-sm btn-primary roundify pull-left" name="follow" value="<%=user.id %>" type="submit"><strong>follow</strong></button>
+		        		</form>
 		        		<div class=" col-md-12 small-spacer"></div>
 		        	</div>
 	        	</div>
@@ -138,10 +157,20 @@
 	<!-- end of row -->
 </div>
 <div id="modal-background"></div>
-<div id="modal-content">
+<div  id="modal-content">
     <form class="form-inline" action="/users/<%= @user.slug %>/new-pic" method="post">
     	<input type="text" class="form-control" placeholder="Profile image URL" name="profile_image">
     	<input type="submit" class="btn btn-sm btn-primary roundify">
+    </form>
+</div>​
+<div  id="modal-following" class="modal-follows">
+    <form class="form-inline" action="/users/<%= @user.slug %>/new-pic" method="post">
+    	<h3>Following Stub</h3>
+    </form>
+</div>​
+<div  id="modal-followers" class="modal-follows">
+    <form class="form-inline" action="/users/<%= @user.slug %>/new-pic" method="post">
+    <h3>Followers Stub</h3>
     </form>
 </div>​
 </body>

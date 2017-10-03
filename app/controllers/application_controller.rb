@@ -39,6 +39,14 @@ class ApplicationController < Sinatra::Base
     end
   end
 
+  post "/follow/:id/new" do
+    redirect '/login' if !logged_in?
+    user = User.find(params[:id].to_i)
+    star = User.find(params[:follow].to_i)
+    user.follow(star)
+    redirect '/tweets'
+  end
+
   post '/tweets/:id/edit' do
     tweet = Tweet.find(params[:id].to_i)
     if params[:content].empty?

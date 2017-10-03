@@ -35,20 +35,50 @@
 
 	  <div class="col-md-3">
 	     <div class="col-md-12 content-box">
-	        <h4>@<%=@user.username%></h4>
-	        <p>Fweets: <%= @user.tweets.size%></p>
+	     	<div class="row">
+	     	<div class="col-md-4">
+		     	<a href="#" id="modal-launcher" class="profile-pic">
+	  				<div class="profile-pic" style="background-image: url('<%= @user.profile_image %>')" >
+	      		<span class="glyphicon glyphicon-camera">       </span>
+	      		<span>Change Image</span>
+	  				</div>
+					</a>
+				</div>
+					<div class="col-md-8">
+	        	<h4>@<%=@user.username%></h4>
+	        	<p>Fweets: <%= @user.tweets.size%></p>
+	      	</div>
+	     </div>
 	     </div>
 	  </div>
 
-	  	<div class="col-md-6">
-	     	<%tweets =  @user.tweets.all.sort_by{|tweet|tweet.created_at}.reverse%>
+	  <div class="col-md-6">
+				<%tweets =  @user.tweets.all.sort_by{|tweet|tweet.created_at}.reverse%>
 	        <% tweets.each do |tweet|%>
-	        	<div class="col-md-12 content-box"> 
-	        		<h6><%="@#{tweet.user.username} - #{tweet.created_at.localtime}"%></h6>
-	        		<br>
-	        		<p><%=tweet.content%></p>
+	        	<div class="col-md-12 content-box div-style">
+	        		<div class="row">
+	        		<div class="col-md-1 bottom-border">
+		        		<a href="/users/<%= tweet.user.slug%>">
+									<div class="profile-badge" style="background-image: url('<%= tweet.user.profile_image %>')" ></div>
+								</a>
+							<a href="/tweets/<%=tweet.id%>">
+							</div>
+							<div class="col-md-10 col-md-offset-1">
+		        		
+		        		<h6><%="@#{tweet.user.username} - #{tweet.created_at.localtime}"%></h6>
+		        		<div class="no-style"><%=tweet.content%></div>
+		        	</div>
+		        	</div>
+		        	<br>
+		        		<%if !tweet.picture.empty?%>
+		        		<div class="col-md-12">
+		        			<img class="user-pic" src="<%= tweet.picture %>">
+		        		</div>
+		        		<% end %>
+		        	
 	        	</div>
 	        	<div class="col-xs-12 xs-spacer"></div>
+	        	</a>
 	        <% end %>
 	        <br>
 	  </div>
@@ -59,8 +89,8 @@
 	        <%User.all.each do |user|%>
 	        	<%next if user.id == @user.id%>
 	        	<div class="row bottom-border">
-		        	<div class="col-sm-2"><a href="#" class="profile-btn btn btn-default btn-circle"><span class="glyphicon glyphicon-user gi-2x"></span></a></div>
-		        	<div class="col-sm-8 pull-right">
+		        	<div class="col-sm-4"><div class="profile-badge" style="background-image: url('<%= user.profile_image %>')" ></div></div>
+		        	<div class="col-sm-8">
 		        		<h6><%="@#{user.username}"%></h6>
 		        		<button class="btn btn-sm btn-primary roundify pull-left" type="submit"><strong>follow</strong></button>
 		        		<div class=" col-md-12 small-spacer"></div>
