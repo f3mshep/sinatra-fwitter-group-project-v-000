@@ -73,11 +73,6 @@
 
 }
 
-.navbtn{
-      margin-top: 7px;
-    }
-
-
 .gi-2x {
   font-size: 1.2em;
 }
@@ -106,6 +101,27 @@
   height: 2px;
 }
 
+
+
+/*---------------Button STYLING-----------------*/
+
+.navbtn{
+      margin-top: 7px;
+    }
+
+.invis-btn {
+  border-color: transparent;
+  background-color: transparent;
+  color: black;
+  font-size: 1.5em;
+  padding-right: 30px;
+  padding-left: 30px;
+}
+
+.invis-btn:focus {
+  outline:0;
+}
+
 .btn-circle {
   width: 30px;
   height: 30px;
@@ -116,8 +132,7 @@
   border-radius: 15px;
 }
 
-
-/*---------------Profile Pic STYLING-----------------*/
+/*---------------Pic STYLING-----------------*/
 
 .profile-pic {
     border-radius: 50%;
@@ -149,7 +164,7 @@
 }
 
 .bottom-border .profile-badge {
-  margin-top: 10px;
+  margin-top: 13px;
 }
 
 .profile-pic:hover {
@@ -167,6 +182,24 @@
     font-size: 8px;
 }
 
+
+.div-style .div-style a:visited, .div-style a:link, .div-style a:active
+{
+    text-decoration: none;
+    color: initial;
+}
+
+.div-style:hover {
+  background-color: #f0f0f5;
+}
+
+.user-pic {
+  max-width: calc(100% - 20px);
+  display: block;
+  margin: 0 auto;
+  border: 1px solid grey;
+  border-radius: 8px;
+}
 
 /*---------------FLASH MESSAGE STYLING-----------------*/
 
@@ -194,4 +227,74 @@
    border-color: #D6E9C6;
    color: black;
    padding-top: 20px;
+}
+
+/*---------------Modal STYLING-----------------*/
+
+#modal-background {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    opacity: .50;
+    -webkit-opacity: .5;
+    -moz-opacity: .5;
+    filter: alpha(opacity=50);
+    z-index: 1000;
+}
+
+#modal-content {
+    background-color: white;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    box-shadow: 0 0 20px 0 #222;
+    -webkit-box-shadow: 0 0 20px 0 #222;
+    -moz-box-shadow: 0 0 20px 0 #222;
+    display: none;
+    height: 120px;
+    left: 50%;
+    margin: -120px 0 0 -160px;
+    padding: 10px;
+    position: fixed;
+    top: 50%;
+    width: 300px;
+    z-index: 1000;
+}
+
+#modal-background.active, #modal-content.active {
+    display: block;
+}​
+
+/***********Pic Input Styling************/
+
+
+input[type=text] {
+  display: block;
+  margin: 0;
+  width: 100%;
+  font-family: sans-serif;
+  font-size: 18px;
+  appearance: none;
+  box-shadow: none;
+  border-radius: none;
+}
+
+.inline-input input[type=text] {
+  padding: 10px;
+  border: solid 1px #dcdcdc;
+  transition: box-shadow 0.3s, border 0.3s;
+}
+.inline-input:focus {
+  border-color: #2c3e50;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(44, 62, 80, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(44, 62, 80, 0.6);
+}
+.inline-input::-moz-placeholder {
+  color: #acb6c0;
+  opacity: 1;
 }

@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170929200120) do
+ActiveRecord::Schema.define(version: 20171003161233) do
 
   create_table "tweets", force: :cascade do |t|
     t.string   "content"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "picture",    default: ""
   end
 
   add_index "tweets", ["user_id"], name: "index_tweets_on_user_id"
@@ -26,6 +27,7 @@ ActiveRecord::Schema.define(version: 20170929200120) do
     t.string "username"
     t.string "email"
     t.string "password_digest"
+    t.string "profile_image",   default: "https://i.imgur.com/rjwIair.jpg"
   end
 
 end

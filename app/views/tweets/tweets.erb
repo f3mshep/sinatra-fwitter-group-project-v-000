@@ -1,14 +1,26 @@
 <head>    
 	<script src="http://code.jquery.com/jquery-1.5.js"></script>
     <script>
-      function countChar(val) {
-        var len = val.value.length;
-        if (len >= 150) {
-          val.value = val.value.substring(0, 150);
-        } else {
-          $('#charNum').text(150 - len);
-        }
-      };
+    	$(document).ready(function(){
+    		$("#showme").hide()
+		      function countChar(val) {
+		        var len = val.value.length;
+		        if (len >= 150) {
+		          val.value = val.value.substring(0, 150);
+		        } else {
+		          $('#charNum').text(150 - len);
+		        }
+		      };
+
+		    $(function(){
+			    $("#modal-launcher, #modal-background, #modal-close").click(function() {
+			        $("#modal-content, #modal-background").toggleClass("active");
+			    });
+				});
+				$("#show").click(function(){
+		        $("#showme").show("fast");
+		    });
+	    });
     </script>
 </head>
 <body class="background-color">
@@ -34,8 +46,8 @@
 	     <div class="col-md-12 content-box">
 	     	<div class="row">
 	     	<div class="col-md-4">
-		     	<a href="#" class="profile-pic">
-	  				<div class="profile-pic" style="background-image: url('https://i.imgur.com/rjwIair.jpg')" >
+		     	<a href="#" id="modal-launcher" class="profile-pic">
+	  				<div class="profile-pic" style="background-image: url('<%= @user.profile_image %>')" >
 	      		<span class="glyphicon glyphicon-camera">       </span>
 	      		<span>Change Image</span>
 	  				</div>
@@ -48,32 +60,62 @@
 	     </div>
 	     </div>
 	  </div>
-
+		<!-- THIS IS THE TWEET MAKER BOX -->
 	  	<div class="col-md-6">
 	  	<div class="col-md-12 content-box">
 		  	<div>
-			  	<form method="post" action="/tweets/new">
+			  	<form method="post" class="form-group" action="/tweets/new">
 			  		<div class=" col-md-12 small-spacer"></div>
 			  		<textarea class="form-control" name="tweet_content" id="field" onkeyup="countChar(this)" maxlength="150" rows="3"></textarea>
+			  		<div class="col-md-12 content-box" id="showme">
+							<div class="container-fluid">
+							<input type="text" name="picture" placeholder="Image URL" class="form-control pull-right">
+							</div>
+						</div>
 			  		<div class=" col-md-12 small-spacer"></div>
 			  		<div class="pull-left" id="charNum"></div>
-			        <button class="btn btn-sm pull-right btn-info roundify" type="submit"><strong>fweet</strong></button>
-			    	<div class=" col-md-12 small-spacer"><br></div>
-			    </form>
+			  		<div>
+				  		<button class="btn btn-sm pull-right btn-info roundify" type="submit"><strong>fweet</strong></button>
+				  		<button type="button" id="show" class="invis-btn pull-right type"><i class="glyphicon glyphicon-picture"></i></button>
+			  			</div>
+			  	</form>
+			  		<br>
+			    	<div class=" col-md-12 small-spacer"></div>
 			</div>
 	  	</div>
+<!-- 
+	  	THESE ARE ALL THE TWEETS -->
 	  	<div class=" col-xs-12 spacer"></div>	
 	     	<br>
 	     	<%tweets =  @tweets.all.sort_by{|tweet|tweet.created_at}.reverse%>
 	        <% tweets.each do |tweet|%>
-	        	<div class="col-md-12 content-box"> 
-	        		<h6><%="@#{tweet.user.username} - #{tweet.created_at.localtime}"%></h6>
-	        		<br>
-	        		<a href="/tweets/<%=tweet.id%>" class="no-style"><p><%=tweet.content%></p></a>
+	        	<div class="col-md-12 content-box div-style">
+	        		<div class="row">
+	        		<div class="col-md-1 bottom-border">
+		        		<a href="/users/<%= tweet.user.slug%>">
+									<div class="profile-badge" style="background-image: url('<%= tweet.user.profile_image %>')" ></div>
+								</a>
+							<a href="/tweets/<%=tweet.id%>">
+							</div>
+							<div class="col-md-10 col-md-offset-1">
+		        		
+		        		<h6><%="@#{tweet.user.username} - #{tweet.created_at.localtime}"%></h6>
+		        		<div class="no-style"><%=tweet.content%></div>
+		        	</div>
+		        	</div>
+		        	<br>
+		        		<%if !tweet.picture.empty?%>
+		        		<div class="col-md-12">
+		        			<img class="user-pic" src="<%= tweet.picture %>">
+		        		</div>
+		        		<% end %>
+		        	
 	        	</div>
 	        	<div class="col-xs-12 xs-spacer"></div>
+	        	</a>
 	        <% end %>
 	        <br>
+
 	  </div>
 
 	  <div class="col-md-3">
@@ -82,7 +124,7 @@
 	        <%User.all.each do |user|%>
 	        	<%next if user.id == @user.id%>
 	        	<div class="row bottom-border">
-		        	<div class="col-sm-4"><div class="profile-badge" style="background-image: url('https://i.imgur.com/rjwIair.jpg')" ></div></div>
+		        	<div class="col-sm-4"><div class="profile-badge" style="background-image: url('<%= user.profile_image %>')" ></div></div>
 		        	<div class="col-sm-8">
 		        		<h6><%="@#{user.username}"%></h6>
 		        		<button class="btn btn-sm btn-primary roundify pull-left" type="submit"><strong>follow</strong></button>
@@ -95,4 +137,11 @@
 	</div>
 	<!-- end of row -->
 </div>
+<div id="modal-background"></div>
+<div id="modal-content">
+    <form class="form-inline" action="/users/<%= @user.slug %>/new-pic" method="post">
+    	<input type="text" class="form-control" placeholder="Profile image URL" name="profile_image">
+    	<input type="submit" class="btn btn-sm btn-primary roundify">
+    </form>
+</div>​
 </body>

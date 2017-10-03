@@ -85,6 +85,12 @@ class ApplicationController < Sinatra::Base
     erb :'/users/show'
   end
 
+  post "/users/:username/new-pic" do
+    @user = User.find_by_slug(params[:username])
+    @user.update(profile_image: params[:profile_image])
+    redirect '/tweets'
+  end
+
   get '/logout' do
     session.clear
     redirect '/login'
@@ -99,6 +105,9 @@ class ApplicationController < Sinatra::Base
    if params[:tweet_content].empty?
     flash[:error] = "Fweets must have content."
     redirect '/tweets/new'
+   elsif !params[:picture].empty?
+    Tweet.create(content: params[:tweet_content], picture: params[:picture], user: current_user)
+    redirect '/tweets'
    else
     Tweet.create(content: params[:tweet_content], user: current_user)
     redirect '/tweets'
