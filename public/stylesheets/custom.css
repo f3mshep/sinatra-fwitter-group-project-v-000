@@ -186,7 +186,7 @@
 .div-style .div-style a:visited, .div-style a:link, .div-style a:active
 {
     text-decoration: none;
-    color: initial;
+    color: black;
 }
 
 .div-style:hover {

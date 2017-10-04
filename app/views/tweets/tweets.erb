@@ -40,8 +40,12 @@
 	      	</div>
 	     </div>
 	     <div class="row">
+	     	<div class="col-md-4">
 	     		<a id="button" data-modal="modalTwo" href="#">Followers: <%= @user.followers.size %></a>
+	     	</div>
+	     	<div class="col-md-4">
 	     		<a id="button" data-modal="modalThree" href="#">Following: <%= @user.following.size %> </a>
+	     	</div>
 	     </div>
 	     </div>
 	  </div>
@@ -80,8 +84,9 @@
 		        		<a href="/users/<%= tweet.user.slug%>">
 									<div class="profile-badge" style="background-image: url('<%= tweet.user.profile_image %>')" ></div>
 								</a>
-							<a href="/tweets/<%=tweet.id%>">
+							
 							</div>
+							<a href="/tweets/<%=tweet.id%>">
 							<div class="col-md-10 col-md-offset-1">
 		        		
 		        		<h6><%="@#{tweet.user.username} - #{tweet.created_at.localtime}"%></h6>
@@ -89,6 +94,7 @@
 		        	</div>
 		        	</div>
 		        	<br>
+		        	
 		        		<%if !tweet.picture.empty?%>
 		        		<div class="col-md-12">
 		        			<img class="user-pic" src="<%= tweet.picture %>">
