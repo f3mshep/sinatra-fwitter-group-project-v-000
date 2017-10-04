@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
 		collection.find {|instance| instance.slug == slug}
 	end
 
-	def follow(user_id)
+  def follow(user_id)
     following_relationships.create(following_id: user_id)
   end
 

@@ -43,7 +43,8 @@ class ApplicationController < Sinatra::Base
     redirect '/login' if !logged_in?
     user = User.find(params[:id].to_i)
     star = User.find(params[:follow].to_i)
-    user.follow(star)
+    user.follow(star.id)
+    flash[:success] = "Now following #{star.username}."
     redirect '/tweets'
   end
 
@@ -89,7 +90,9 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/users/:username' do
+    @current_user = current_user
     @user = User.find_by_slug(params[:username])
+    @cool_people = User.all - current_user.following
     erb :'/users/show'
   end
 
@@ -130,16 +133,54 @@ class ApplicationController < Sinatra::Base
       redirect '/tweets'
       #set up flash message to alert user they logged in
     else
-      erb :'/users/login'
+      flash[:error] = "Wrong username or password."
+      redirect '/login'
       #maybe unhide an element that alerts user they failed??
     end
 
   end
 
+  get '/users/:slug/followers' do
+    
+    @user = User.find_by_slug(params[:slug])
+    redirect '/login' if !logged_in? || current_user != @user
+    @followers = @user.followers
+    erb :'/users/followers'
+  end
+
+  get '/users/:slug/following' do
+    redirect '/login' if !logged_in?
+    @user = User.find_by_slug(params[:slug])
+    @following = @user.following
+    erb :'/users/following'
+  end
+
+  post '/users/:user_slug/followers/delete' do
+    @user = User.find_by_slug(params[:user_slug])
+    @follower = User.find_by_slug(params[:follower])
+    redirect '/login' if !logged_in? || current_user != @user
+    session[:return_to] = request.referer
+    @follower.unfollow(@user)
+    flash[:success] = "Removed #{@follower.username}."
+    redirect session.delete(:return_to)
+
+  end
+
+  post '/users/:user_slug/following/:delete_slug/delete' do
+    user = User.find_by_slug(params[:user_slug])
+    delete_me = User.find_by_slug(params[:delete_slug])
+    redirect '/tweets' if user != current_user
+    session[:return_to] = request.referer
+    user.unfollow(delete_me)
+    flash[:success] = "Unfollowed #{delete_me.username}."
+    redirect session.delete(:return_to)
+  end
+
   get '/tweets' do
     redirect '/login' if !logged_in?
     @user = current_user
-    @tweets = Tweet.all
+    @cool_people = User.all - @user.following
+    @tweets = (@user.following.collect {|user|user.tweets } << @user.tweets).flatten
     erb :'/tweets/tweets'
   end
 

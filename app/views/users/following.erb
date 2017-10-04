@@ -1,0 +1,51 @@
+<head>
+	<script src="http://code.jquery.com/jquery-1.5.js"></script>
+	<script>
+		$(function(){
+		  var prev;    
+
+		  $('.following').hover(function(){
+		  prev = $(this).text();
+		      $(this).text("Unfollow");
+		  }, function(){
+		      $(this).text(prev)
+		  });
+		})
+	</script>
+</head>
+<body class="background-color">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand navbar-center" href="/">fwitter</a>
+    </div>
+    <div  class="padding-right">
+    <ul class="nav navbar-nav navbar-right">
+    	<li class="left-divider"><a href="/logout"><span class="glyphicon glyphicon-log-out gi-2x"></span></a></li>
+    	<li><form method="get" action="/tweets/new" ><button class="btn btn-md btn-info btn-block roundify navbtn" type="submit"><strong>fweet</strong></button></form></li>
+    </ul>
+    </div>
+  </div>
+</nav>
+
+	<div class="container">
+
+	
+					<%@following.each do |followee|%>
+					<div class = "user-card">
+						<img src="<%=followee.profile_image%>">
+						<br>
+						<br>
+						<a href="/users/<%=followee.slug%>"><h4>@<%=followee.username%></h4></a>
+						<br>
+						<form action="/users/<%=@user.slug%>/following/<%=followee.slug%>/delete" method="post">
+							<button class="following">Following</button>
+						</form>
+					</div>
+
+					<%end%>
+					<%if @following.empty?%>
+						<h3 style="text-align: center;">You aren't following anyone.</h3>
+					<%end%>
+			<br>
+	</div>

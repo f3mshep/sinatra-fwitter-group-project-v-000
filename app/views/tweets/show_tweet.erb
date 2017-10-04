@@ -23,6 +23,11 @@
 						<div class="col-mid-4 col-md-offset-2">
 							<h5><strong><%="At #{@tweet.created_at.localtime} #{@tweet.user.username} wrote:"%></strong></h5>
 							<h4><%= @tweet.content %></h4>
+						<%if !@tweet.picture.empty?%>
+		        		
+		        			<img class="user-pic pull-left" src="<%= @tweet.picture %>">
+		        		
+		        		<% end %>
 							<br>
 						</div>
 				</div>

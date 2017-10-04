@@ -37,23 +37,39 @@
 	     <div class="col-md-12 content-box">
 	     	<div class="row">
 	     	<div class="col-md-4">
-		     	<a href="#" id="modal-launcher" class="profile-pic">
+		     	<a href="#" class="profile-pic">
 	  				<div class="profile-pic" style="background-image: url('<%= @user.profile_image %>')" >
-	      		<span class="glyphicon glyphicon-camera">       </span>
-	      		<span>Change Image</span>
 	  				</div>
 					</a>
 				</div>
-					<div class="col-md-8">
-	        	<h4>@<%=@user.username%></h4>
-	        	<p>Fweets: <%= @user.tweets.size%></p>
-	      	</div>
+				<div class="col-md-8">
+	        		<h4>@<%=@user.username%></h4>
+	        		<p>Fweets: <%= @user.tweets.size%></p>
+	      		</div>
 	     </div>
+	     	<%if !@current_user.following.include?(@user) && @current_user != @user%>
+	     			<br>
+	     				<form action="/follow/<%= @current_user.id %>/new" method="post">
+		        			<button class="btn btn-sm btn-primary roundify pull-left" name="follow" value="<%=@user.id %>" type="submit"><strong>follow</strong></button>
+		        		</form>
+	     		
+	     	<%end%>
+	     	<%if @current_user.following.include?(@user) && @current_user != @user%>
+	     			<br>
+	     			<form method="/users/<%=@user.slug%>/following/<%=@current_user.slug%>/delete" action="post">
+	     				<button class="pull-left btn btn-primary btn-sm roundify"><strong>Unfollow</strong></button>
+	     			</form>
+	     	<%end%>
 	     </div>
 	  </div>
 
 	  <div class="col-md-6">
 				<%tweets =  @user.tweets.all.sort_by{|tweet|tweet.created_at}.reverse%>
+				<%if tweets.empty?%>
+				<div class="col-md-12 content-box">
+					<h4><strong><%=@user.username%> has not made any fweets.</strong></h4>
+				</div>
+				<%end%>
 	        <% tweets.each do |tweet|%>
 	        	<div class="col-md-12 content-box div-style">
 	        		<div class="row">
@@ -83,16 +99,20 @@
 	        <br>
 	  </div>
 
-	  <div class="col-md-3">
+	  	  <div class="col-md-3">
 	     <div class="col-md-12 content-box">
 	        <h4><strong>Who to Follow</strong></h4>
-	        <%User.all.each do |user|%>
-	        	<%next if user.id == @user.id%>
+	        <%@cool_people.each do |user|%>
+	        	<%next if user.id == @user.id || user.id == @current_user.id%>
 	        	<div class="row bottom-border">
+	        		<a href="/users/<%=user.slug %>">
 		        	<div class="col-sm-4"><div class="profile-badge" style="background-image: url('<%= user.profile_image %>')" ></div></div>
+		        	</a>
 		        	<div class="col-sm-8">
 		        		<h6><%="@#{user.username}"%></h6>
-		        		<button class="btn btn-sm btn-primary roundify pull-left" type="submit"><strong>follow</strong></button>
+		        		<form action="/follow/<%= @current_user.id %>/new" method="post">
+		        			<button class="btn btn-sm btn-primary roundify pull-left" name="follow" value="<%=user.id %>" type="submit"><strong>follow</strong></button>
+		        		</form>
 		        		<div class=" col-md-12 small-spacer"></div>
 		        	</div>
 	        	</div>

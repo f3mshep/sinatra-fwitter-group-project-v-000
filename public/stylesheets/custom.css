@@ -101,6 +101,71 @@
   height: 2px;
 }
 
+/****************USER CARD STYLING************************/
+
+.user-card {
+  vertical-align: top;
+  position: relative;
+  display: inline-block;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  width: 365px;
+  height: 500px;
+  background-color: white;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+  border-radius: 5px;
+  text-align center;
+  margin: 5px;
+}
+
+.user-card img {
+  vertical-align: top;
+  width: 365px;
+  height: 365px;
+  border-radius: 5px;
+}
+
+.user-card h4 {
+  text-align: center;
+}
+
+.user-card button {
+    position: absolute;
+    bottom: 0;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: #2C3E50;
+    border-width: 1px;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #2C3E50;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+}
+
+.user-card p {
+  text-align: center;
+}
+
+.user-card a {
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+}
+
+ .user-card button:hover {
+    background-color: black;
+    border-color: black;
+  }
+
+ .user-card a:hover {
+    opacity: 0.7;
+}
 
 
 /*---------------Button STYLING-----------------*/
@@ -261,7 +326,7 @@
     padding: 10px;
     position: fixed;
     top: 50%;
-    width: 300px;
+    width: 320px;
     z-index: 1000;
 }
 
